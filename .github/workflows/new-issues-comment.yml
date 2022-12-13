@@ -1,0 +1,22 @@
+name: Create Comment
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  create-comment:
+    runs-on: ubuntu-latest
+    #if: github.event.label.name == 'xxx'
+    steps:
+      - name: Create comment
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}.
+            Thanks for opening this issue!
+            This was generated from GitHub Actions.
+          contents: '+1,heart'
