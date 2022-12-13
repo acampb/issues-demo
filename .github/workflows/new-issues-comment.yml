@@ -7,7 +7,7 @@ on:
 jobs:
   create-comment:
     runs-on: ubuntu-latest
-    #if: github.event.label.name == 'xxx'
+    if: github.event.label.name == 'gcp'
     steps:
       - name: Create comment
         uses: actions-cool/issues-helper@v2
@@ -16,7 +16,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Hello @${{ github.event.issue.user.login }}.
-            Thanks for opening this issue!
-            This was generated from GitHub Actions.
+            I will deploy infrastructure on GCP!
+          # body: |
+          #   Hello @${{ github.event.issue.user.login }}.
+          #   Thanks for opening this issue!
+          #   This was generated from GitHub Actions.
           contents: '+1,heart'
