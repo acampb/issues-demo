@@ -7,7 +7,7 @@ on:
 jobs:
   create-comment:
     runs-on: ubuntu-latest
-    if: github.event.label.name == 'gcp'
+    #if: github.event.label.name == 'gcp'
     steps:
       - name: Create comment
         uses: actions-cool/issues-helper@v2
@@ -16,9 +16,21 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            I will deploy infrastructure on GCP!
+            Nice job opening a new issue! :tada:
+
+            We will try to assign this to you which will kick off the next action!
           # body: |
           #   Hello @${{ github.event.issue.user.login }}.
           #   Thanks for opening this issue!
           #   This was generated from GitHub Actions.
           contents: '+1,heart'
+
+  auto-assign:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Auto-assign issue'
+              uses: pozil/auto-assign-issue@v1
+              with:
+                  assignees: ${{ github.event.issue.user.login }}
+                  numOfAssignee: 1
+                  allowSelfAssign: true
