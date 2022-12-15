@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  test:
+  terraform:
     defaults:
       run:
         working-directory: terraform
