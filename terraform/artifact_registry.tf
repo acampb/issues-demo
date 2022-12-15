@@ -8,7 +8,7 @@ resource "google_artifact_registry_repository" "gar" {
     google_project_service.gar
   ]
   location      = "us-east1"
-  repository_id = "artifacts-dsdemo-${terraform.workspace}"
+  repository_id = "artifacts-${terraform.workspace}"
   description   = "Repository for Docker images"
   format        = "DOCKER"
 }
