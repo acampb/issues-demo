@@ -74,7 +74,7 @@ jobs:
       - name: Terraform Output
         id: output
         run: |
-          CLOUDRUN_URL=$(terraform output cloudrun_url)
+          CLOUDRUN_URL=$(terraform output cloudrun_url | tr -d '"')
           echo "cloudrun_url=$CLOUDRUN_URL" >> $GITHUB_OUTPUT
 
       - name: Post URL to PR
