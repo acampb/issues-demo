@@ -39,3 +39,9 @@ jobs:
         ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
         docker push us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }}
       working-directory: containers/timecard-memer
+
+    - name: Deploy Docker image to Cloud Run
+      run: |
+        ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+        gcloud run deploy timecard-memer-$ENV_ID --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 8000
+      working-directory: containers/timecard-memer
