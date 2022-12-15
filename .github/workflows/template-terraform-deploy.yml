@@ -41,7 +41,18 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Terraform Workspace Select
+      - name: Terraform Workspace Select or Create
+        if: github.event_name == 'pull_request'
+        id: workspace
+        run: |
+          WORKSPACES=$(terraform workspace list)
+          if ! echo $WORKSPACES | grep -q $GITHUB_HEAD_REF; then
+            terraform workspace new $GITHUB_HEAD_REF
+          fi
+            terraform workspace select $GITHUB_HEAD_REF
+
+      - name: Terraform Workspace Select or Create
+        if: github.event_name =/= 'pull_request'
         id: workspace
         run: |
           WORKSPACES=$(terraform workspace list)
