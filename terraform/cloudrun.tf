@@ -6,7 +6,7 @@ resource "google_cloud_run_service" "app" {
   depends_on = [
     google_project_service.cloudrun
   ]
-  name     = "cloudrun-dsdemo-c54db315"
+  name     = "cloudrun-dsdemo-${var.env_id}"
   location = "us-central1"
 
   template {
