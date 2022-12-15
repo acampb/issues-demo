@@ -1,0 +1,59 @@
+name: Testing Passing Outputs
+
+on:
+  #push:
+  #  branches: [ "main" ]
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
+        token_format: access_token
+
+    - name: Get the Cloud Run URL
+      id: get_url
+      run: |
+        URL=$(gcloud run services describe cloudrun-dsdemo-40 --region us-east1 --format 'value(status.url)')
+        echo $URL
+        echo "CLOUDRUN_URL=$URL" >> $GITHUB_OUTPUT
+
+    - name: Print the Cloud Run URL
+      run: |
+        echo "Obtained Cloud Run URL: ${{ steps.get_url.outputs.CLOUDRUN_URL }}"
+
+    #This example runs "docker login" directly to Artifact Registry.
+    # - uses: docker/login-action@v1
+    #   with:
+    #     registry: us-east1-docker.pkg.dev
+    #     username: oauth2accesstoken
+    #     password: ${{ steps.auth.outputs.access_token }}
+
+    # - name: Build the Docker image
+    #   run: |
+    #     ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+    #     docker build . --file Dockerfile --tag us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }}
+    #   working-directory: containers/timecard-memer
+
+    # - name: Push the Docker image
+    #   run: |
+    #     ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+    #     docker push us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }}
+    #   working-directory: containers/timecard-memer
+
+    # - name: Deploy Docker image to Cloud Run
+    #   run: |
+    #     ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+    #     gcloud run deploy cloudrun-dsdemo-$ENV_ID --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 8000
+    #   working-directory: containers/timecard-memer
