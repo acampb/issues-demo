@@ -1,0 +1,24 @@
+name: Deploy Demo Environment
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - labeled
+
+jobs:
+  placeholder-comment:
+    runs-on: ubuntu-latest
+    name: Added Comment
+    if: contains( github.event.pull_request.labels.*.name, 'deploy environment')
+    steps:
+      - name: Create comment
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            You successfully labeled the PR! :tada:
+          contents: 'heart'
