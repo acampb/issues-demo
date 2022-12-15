@@ -12,6 +12,10 @@ jobs:
     uses: ./.github/workflows/template-terraform-deploy.yml
     secrets: inherit
 
+  call-workflow-deploy-docker:
+    uses: ./.github/workflows/template-docker-deploy.yml
+    secrets: inherit
+
   # placeholder-comment:
   #   runs-on: ubuntu-latest
   #   name: Added Comment

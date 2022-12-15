@@ -1,4 +1,4 @@
-name: Testing Passing Outputs
+name: Docker Deploy
 
 on:
   #push:
@@ -7,11 +7,8 @@ on:
   workflow_call:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
 
@@ -34,7 +31,6 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
         token_format: access_token
-
 
     #This example runs "docker login" directly to Artifact Registry.
     - uses: docker/login-action@v1
@@ -68,3 +64,14 @@ jobs:
     - name: Print the Cloud Run URL
       run: |
         echo "Obtained Cloud Run URL: ${{ steps.get_url.outputs.CLOUDRUN_URL }}"
+
+    - name: Post comment to PR
+      uses: actions-cool/issues-helper@v2
+      with:
+        actions: 'create-comment'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          :rocket: Application has been deployed to ${{ steps.get_url.outputs.CLOUDRUN_URL }}.
+
+
