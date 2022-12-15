@@ -19,7 +19,7 @@ jobs:
             Looks like you want to provision a new environment, let's get started! :tada:
 
             We'll take a couple of steps to get you up and running.'
-            1. Create a new branch for your environment named `${issue.user.login}-dsdemo-${issue.number}`
+            1. Create a new branch for your environment named `${{ issue.user.login }}-dsdemo-${{ issue.number }}`
             2. Create a new Pull Request for your environment
 
             The rest of the automation will interact with the Pull Requst. Once it is
