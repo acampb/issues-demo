@@ -13,8 +13,8 @@ jobs:
 
       - name: Test
         run: |
-          echo "ref_name: ${{ github.ref_name }}"
+          echo "ref_name: $GITHUB_REF_NAME"
 
-          export ENV_ID=$(echo (github.ref_name) | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+          export ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
 
           echo "ENV_ID: $ENV_ID
