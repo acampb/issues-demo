@@ -1,0 +1,20 @@
+name: Testing ENV_ID
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: |
+          echo "ref_name: ${{ github.ref_name }}"
+
+          export ENV_ID=$(echo ${{ github.ref_name }} | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+
+          echo "ENV_ID: $ENV_ID
