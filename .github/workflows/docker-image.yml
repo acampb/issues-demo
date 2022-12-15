@@ -14,6 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
+
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag timecard-memer:${{ github.sha }}
       working-directory: containers/timecard-memer
