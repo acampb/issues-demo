@@ -19,6 +19,7 @@ jobs:
           echo "ref_name: $GITHUB_REF_NAME"
           export ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
           echo "ENV_ID: $ENV_ID"
+          echo "::set-env name=ENV_ID::$ENV_ID"
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
