@@ -9,12 +9,10 @@ on:
 
 jobs:
   call-workflow-deploy-infrastructure:
-    if: contains( github.event.pull_request.labels.*.name, 'deploy environment')
     uses: ./.github/workflows/template-terraform-deploy.yml
     secrets: inherit
 
   call-workflow-deploy-docker:
-    if: contains( github.event.pull_request.labels.*.name, 'deploy environment')
     uses: ./.github/workflows/template-docker-deploy.yml
     secrets: inherit
 
