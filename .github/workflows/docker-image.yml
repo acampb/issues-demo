@@ -19,6 +19,7 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
+        token_format: access_token
 
     # This example runs "docker login" directly to Artifact Registry.
     - uses: docker/login-action@v1
