@@ -12,6 +12,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+
     - name: Get branch name
       id: get_branch_name
       run: |
