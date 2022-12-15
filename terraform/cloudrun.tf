@@ -12,16 +12,16 @@ resource "google_cloud_run_service" "app" {
     google_project_service.cloudrun,
     google_project_service.rm
   ]
+  lifecycle {
+    ignore_changes = [
+      template[0].spec[0].containers[0].image
+    ]
+  }
   name     = "cloudrun-${terraform.workspace}"
   location = "us-east1"
 
   template {
-    lifecycle {
-      ignore_changes = [
-        spec.0.containers.0.image
-      ]
-    }
-    spec {
+      spec {
       containers {
         image = "us-docker.pkg.dev/cloudrun/container/hello"
       }
