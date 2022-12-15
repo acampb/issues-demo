@@ -2,6 +2,9 @@ resource "google_project_service" "cloudrun" {
   service = "run.googleapis.com"
 }
 
+resource "google_project_service" "rm" {
+  service = "cloudresourcemanager.googleapis.com"
+}
 resource "google_cloud_run_service" "app" {
   depends_on = [
     google_project_service.cloudrun

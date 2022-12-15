@@ -63,10 +63,10 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        continue-on-error: true
+        continue-on-error: false
 
       - name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve -no-color
-        continue-on-error: true
+        continue-on-error: false
 
