@@ -21,12 +21,12 @@ jobs:
     - name: Get branch name
       id: get_branch_name
       run: |
-        if [ $GITHUB_HEAD_REF == "" ]; then
-          echo "GITHUB_HEAD_REF is empty"
-          BRANCH="$GITHUB_REF_NAME"
+        # if the event is a pull request, use the head ref
+        if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+          BRANCH=$GITHUB_HEAD_REF
         else
-          echo "GITHUB_HEAD_REF is not empty"
-          BRANCH="$GITHUB_HEAD_REF"
+          # otherwise, use the ref name
+          BRANCH=$GITHUB_REF_NAME
         fi
         echo "head_ref: $GITHUB_HEAD_REF"
         echo "ref_name: $GITHUB_REF_NAME"
