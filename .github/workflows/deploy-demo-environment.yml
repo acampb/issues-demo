@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/template-terraform-deploy.yml
     secrets: inherit
 
-  cdeploy-docker:
+  deploy-docker:
     uses: ./.github/workflows/template-docker-deploy.yml
     secrets: inherit
     needs: deploy-infrastructure
