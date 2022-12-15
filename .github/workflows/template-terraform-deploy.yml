@@ -15,12 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Test
-        run: |
-          echo "ref_name: $GITHUB_REF_NAME"
-          export ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
-          echo "ENV_ID: $ENV_ID"
-
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0'
@@ -50,12 +44,11 @@ jobs:
       - name: Terraform Workspace Select
         id: workspace
         run: |
-          ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
           WORKSPACES=$(terraform workspace list)
-          if ! echo $WORKSPACES | grep -q $ENV_ID; then
-            terraform workspace new $ENV_ID
+          if ! echo $WORKSPACES | grep -q $GITHUB_REF_NAME; then
+            terraform workspace new $GITHUB_REF_NAME
           fi
-            terraform workspace select $ENV_ID
+            terraform workspace select $GITHUB_REF_NAME
 
       - name: Terraform Validate
         id: validate
