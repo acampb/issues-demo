@@ -1,7 +1,7 @@
 # https://github.com/robvanderleek/create-issue-branch#option-2-configure-github-action
 mode: auto
 silent: false
-branchName: '${issue.user.login}-dsdemo-${issue.number}'
+branchName: 'dsdemo-${issue.number}'
 autoCloseIssue: true
 gitSafeReplacementChar: "-"
 openPR: true
