@@ -10,6 +10,7 @@ on:
 jobs:
   call-workflow-deploy-infrastructure:
     uses: ./.github/workflows/template-terraform-deploy.yml
+    secrets: inherit
 
   # placeholder-comment:
   #   runs-on: ubuntu-latest
