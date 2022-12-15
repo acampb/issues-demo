@@ -49,7 +49,7 @@ jobs:
       - name: Terraform Workspace Select
         id: workspace
         run: |
-          WORKSPACES = terraform workspace list
+          WORKSPACES=$(terraform workspace list)
           if ! echo $WORKSPACES | grep -q $ENV_ID; then
             terraform workspace new $ENV_ID
           fi
