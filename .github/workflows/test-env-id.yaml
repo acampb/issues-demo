@@ -1,4 +1,4 @@
-name: Testing ENV_ID
+name: Terraform Deploy
 
 on:
   workflow_dispatch:
@@ -6,6 +6,9 @@ on:
 
 jobs:
   test:
+    defaults:
+      run:
+        working-directory: /terraform
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,3 +34,33 @@ jobs:
         name: 'gcloud'
         run: |
           gcloud config list
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Workspace Select
+        id: workspace
+        run: |
+          WORKSPACES = terraform workspace list
+          if ! echo $WORKSPACES | grep -q $ENV_ID; then
+            terraform workspace new $ENV_ID
+          fi
+            terraform workspace select $ENV_ID
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
