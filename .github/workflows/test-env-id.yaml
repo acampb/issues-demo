@@ -9,10 +9,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Test
         run: |
           echo "ref_name: $GITHUB_REF_NAME"
           export ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
           echo "ENV_ID: $ENV_ID"
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_CREDENTIALS }}'
+
+      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - id: 'gcloud'
+        name: 'gcloud'
+        run: |
+          gcloud config list
