@@ -21,8 +21,8 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          service_account: 'github-actions-demo@acampbell-sc-lab.iam.gserviceaccount.com'
-          credentials_json: '${{ secrets.GCP_SA_CREDENTIALS }}'
+          #service_account: 'github-actions-demo@acampbell-sc-lab.iam.gserviceaccount.com'
+          credentials_json: ${{ secrets.GCP_SA_CREDENTIALS }}
 
       # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
