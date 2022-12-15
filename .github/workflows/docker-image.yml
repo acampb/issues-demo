@@ -16,17 +16,17 @@ jobs:
 
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0'
+      uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
-        #token_format: access_token
+        token_format: access_token
 
-    # This example runs "docker login" directly to Artifact Registry.
-    # - uses: docker/login-action@v1
-    #   with:
-    #     registry: us-east1-docker.pkg.dev
-    #     username: oauth2accesstoken
-    #     password: ${{ steps.auth.outputs.access_token }}
+    #This example runs "docker login" directly to Artifact Registry.
+    - uses: docker/login-action@v1
+      with:
+        registry: us-east1-docker.pkg.dev
+        username: oauth2accesstoken
+        password: ${{ steps.auth.outputs.access_token }}
 
     - name: Build the Docker image
       run: |
