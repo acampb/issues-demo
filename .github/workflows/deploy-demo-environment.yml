@@ -8,13 +8,14 @@ on:
     - 'main'
 
 jobs:
-  call-workflow-deploy-infrastructure:
+  deploy-infrastructure:
     uses: ./.github/workflows/template-terraform-deploy.yml
     secrets: inherit
 
-  call-workflow-deploy-docker:
+  cdeploy-docker:
     uses: ./.github/workflows/template-docker-deploy.yml
     secrets: inherit
+    needs: deploy-infrastructure
 
   # placeholder-comment:
   #   runs-on: ubuntu-latest
