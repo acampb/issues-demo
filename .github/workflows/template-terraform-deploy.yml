@@ -71,3 +71,20 @@ jobs:
         run: terraform apply -auto-approve -no-color
         continue-on-error: false
 
+      - name: Terraform Output
+        id: output
+        run: |
+          CLOUDRUN_URL=$(terraform output cloudrun_url)
+          echo "cloudrun_url=$CLOUDRUN_URL" >> $GITHUB_ENV
+
+      - name: Post URL to PR
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Infrastructure has been deployed! :muscle:
+
+            You can access the Cloud Run service at ${{ env.cloudrun_url }}
+
