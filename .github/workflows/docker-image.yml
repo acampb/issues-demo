@@ -20,7 +20,19 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_CREDENTIAL }}
 
+    # This example runs "docker login" directly to Artifact Registry.
+    - run: |
+        echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://us-east1-docker.pkg.dev
+
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag timecard-memer:${{ github.sha }}
+      run: |
+        ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+        docker build . --file Dockerfile --tag us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }}
+      working-directory: containers/timecard-memer
+
+    - name: Push the Docker image
+      run: |
+        ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
+        docker push us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-dsdemo-$ENV_ID/timecard-memer:${{ github.sha }}
       working-directory: containers/timecard-memer
