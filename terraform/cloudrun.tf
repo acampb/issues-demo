@@ -10,7 +10,7 @@ resource "google_cloud_run_service" "app" {
     google_project_service.cloudrun
   ]
   name     = "cloudrun-dsdemo-${terraform.workspace}"
-  location = "us-central1"
+  location = "us-east1"
 
   template {
     spec {
