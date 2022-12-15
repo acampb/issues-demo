@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./containers/timecard-memer --file Dockerfile --tag timecard-memer:(github.sha)
+      run: docker build ./containers/timecard-memer --file Dockerfile --tag timecard-memer:${{ github.sha }}
