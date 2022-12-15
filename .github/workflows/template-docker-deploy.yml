@@ -22,9 +22,9 @@ jobs:
           echo "GITHUB_HEAD_REF is not empty"
           BRANCH=$GITHUB_HEAD_REF
         fi
-        echo $GITHUB_HEAD_REF
-        echo $GITHUB_REF_NAME
-        echo $BRANCH
+        echo "head_ref: $GITHUB_HEAD_REF"
+        echo "ref_name: $GITHUB_REF_NAME"
+        echo "branch: $BRANCH"
         echo "BRANCH=$BRANCH" >> $GITHUB_OUTPUT
 
     - id: 'auth'
