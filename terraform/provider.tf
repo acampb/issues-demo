@@ -1,4 +1,4 @@
 provider "google" {
   project = "acampbell-sc-lab"
-  region = "us-east1"
+  region  = "us-east1"
 }

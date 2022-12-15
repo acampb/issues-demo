@@ -1,5 +1,5 @@
 resource "google_project_service" "gar" {
-  service = "artifactregistry.googleapis.com"
+  service            = "artifactregistry.googleapis.com"
   disable_on_destroy = false
 }
 
