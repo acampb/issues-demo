@@ -66,6 +66,7 @@ jobs:
         echo "Obtained Cloud Run URL: ${{ steps.get_url.outputs.CLOUDRUN_URL }}"
 
     - name: Post comment to PR
+      if: github.event_name == 'pull_request'
       uses: actions-cool/issues-helper@v2
       with:
         actions: 'create-comment'
