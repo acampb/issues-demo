@@ -17,4 +17,4 @@ jobs:
 
           export ENV_ID=$(echo $GITHUB_REF_NAME | base64 | tr -d '=/!' | tr '[:upper:]' '[:lower:]'| tail -c 9)
 
-          echo "ENV_ID: $ENV_ID
+          echo "ENV_ID: $ENV_ID"
