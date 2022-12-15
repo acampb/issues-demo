@@ -1,10 +1,10 @@
 resource "google_project_service" "cloudrun" {
-  service = "run.googleapis.com"
+  service            = "run.googleapis.com"
   disable_on_destroy = false
 }
 
 resource "google_project_service" "rm" {
-  service = "cloudresourcemanager.googleapis.com"
+  service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = false
 }
 resource "google_cloud_run_service" "app" {
