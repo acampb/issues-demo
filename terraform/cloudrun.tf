@@ -6,7 +6,7 @@ resource "google_cloud_run_service" "app" {
   depends_on = [
     google_project_service.cloudrun
   ]
-  name     = "cloudrun-dsdemo-${var.env_id}"
+  name     = "cloudrun-dsdemo-${terraform.workspace}"
   location = "us-central1"
 
   template {
