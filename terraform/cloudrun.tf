@@ -16,6 +16,11 @@ resource "google_cloud_run_service" "app" {
   location = "us-east1"
 
   template {
+    lifecycle {
+      ignore_changes = [
+        spec.0.containers.0.image
+      ]
+    }
     spec {
       containers {
         image = "us-docker.pkg.dev/cloudrun/container/hello"
