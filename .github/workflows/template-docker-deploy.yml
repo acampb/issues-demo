@@ -12,17 +12,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+
     - name: Get branch name
       id: get_branch_name
       run: |
-        if [ $GITHUB_HEAD_REF == "" ]; then
-          echo "GITHUB_HEAD_REF is empty"
-          BRANCH=$GITHUB_REF_NAME
-        else
-          echo "GITHUB_HEAD_REF is not empty"
+        # if the event is a pull request, use the head ref
+        if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
           BRANCH=$GITHUB_HEAD_REF
+        else
+          # otherwise, use the ref name
+          BRANCH=$GITHUB_REF_NAME
         fi
-        echo $BRANCH
+        echo "head_ref: $GITHUB_HEAD_REF"
+        echo "ref_name: $GITHUB_REF_NAME"
+        echo "branch: $BRANCH"
         echo "BRANCH=$BRANCH" >> $GITHUB_OUTPUT
 
     - id: 'auth'
@@ -66,6 +74,7 @@ jobs:
         echo "Obtained Cloud Run URL: ${{ steps.get_url.outputs.CLOUDRUN_URL }}"
 
     - name: Post comment to PR
+      if: github.event_name == 'pull_request'
       uses: actions-cool/issues-helper@v2
       with:
         actions: 'create-comment'

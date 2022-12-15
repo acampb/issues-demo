@@ -82,6 +82,7 @@ jobs:
       #     echo "CLOUDRUN_URL=$CLOUDRUN_URL" >> $GITHUB_OUTPUT
 
       - name: Post comment to PR
+        if: github.event_name == 'pull_request'
         uses: actions-cool/issues-helper@v2
         with:
           actions: 'create-comment'
