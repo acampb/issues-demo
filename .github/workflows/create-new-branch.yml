@@ -39,4 +39,20 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ steps.find_pr.outputs.PR }}
           body: |
-            Testing a comment on the PR
+            Nice to see you again! :wave:
+
+            Let's get going and start deploying code. All you need to do is add the **deploy environment** label to this pull request and I'll take care of the rest. Use the side bar to the right to add the label. :point_right:
+
+      - name: Comment on PR
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Alright, I've created a new branch and pull request for you. You will interact with the GitHub Actions bot :robot: over on the pull request.
+
+            You can access the pull request here: **https://github.com/${{ github.repository }}/pull/${{ steps.find_pr.outputs.PR }}**
+
+            See you there! :wave:
+
