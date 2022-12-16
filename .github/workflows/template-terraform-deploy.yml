@@ -25,11 +25,6 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
-      - id: 'gcloud'
-        name: 'gcloud'
-        run: |
-          gcloud config list
-
       - uses: hashicorp/setup-terraform@v2
 
       - name: Terraform fmt
@@ -76,6 +71,7 @@ jobs:
         continue-on-error: false
 
       - name: Find Comment
+        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'deploy environment'
         uses: peter-evans/find-comment@v2
         id: fc
         with:
@@ -84,6 +80,7 @@ jobs:
           body-includes: Software Factory Build Output
 
       - name: Create or update comment
+        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'deploy environment'
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}

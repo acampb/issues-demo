@@ -16,17 +16,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Looks like you want to provision a new environment, let's get started! :tada:
+            :wave: Hey there! I'm the GitHub Actions bot, and I'll be helping you get a new environment up and running!
 
-            We'll take a couple of steps to get you up and running.'
+            Start the process by assigning this issue to yourself. You can use the `Assignees` menu on the right side of the issue and click **assign yourself**.
+
+            I'll take it from there and do the following for you:
+
             1. Create a new branch for your environment named `dsdemo-${{ github.event.issue.number }}`
-            2. Create a new Pull Request for your environment
-
-            The rest of the automation will interact with the Pull Requst. Once it is
-            created we'll share the link with you in another comment.
-          # body: |
-          #   Hello @${{ github.event.issue.user.login }}.
-          #   Thanks for opening this issue!
-          #   This was generated from GitHub Actions.
+            2. Open a new Pull Request for your environment
+            3. Add a welcome comment to your Pull Request with instructions on next steps
+            4. Provide a link to your Pull Request in this issue and we will continue the process there
           contents: 'heart'
 

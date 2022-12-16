@@ -84,6 +84,7 @@ jobs:
           :rocket: Application has been deployed to ${{ steps.get_url.outputs.CLOUDRUN_URL }}.
 
     - name: Find Comment
+      if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'deploy environment'
       uses: peter-evans/find-comment@v2
       id: fc
       with:
@@ -92,6 +93,7 @@ jobs:
         body-includes: Software Factory Build Output
 
     - name: Create or update comment
+      if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'deploy environment'
       uses: peter-evans/create-or-update-comment@v2
       with:
         comment-id: ${{ steps.fc.outputs.comment-id }}
