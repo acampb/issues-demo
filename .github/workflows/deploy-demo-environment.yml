@@ -1,4 +1,4 @@
-name: Deploy Demo Environment
+name: Software Factory
 
 on:
   pull_request:

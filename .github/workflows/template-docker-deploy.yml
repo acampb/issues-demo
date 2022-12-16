@@ -59,7 +59,7 @@ jobs:
 
     - name: Deploy Docker image to Cloud Run
       run: |
-        gcloud run deploy cloudrun-${{ steps.get_branch_name.outputs.BRANCH }} --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/app:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 8000
+        gcloud run deploy cloudrun-${{ steps.get_branch_name.outputs.BRANCH }} --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/app:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 80
       working-directory: containers/app
 
     - name: Get the Cloud Run URL
