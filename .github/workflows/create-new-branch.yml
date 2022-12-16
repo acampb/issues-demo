@@ -20,3 +20,12 @@ jobs:
 
       - name: 'Echo branch name'
         run: echo ${{ steps.Create_Issue_Branch.outputs.branchName }}
+
+      - name: Find PR number
+        id: find_pr
+        run: |
+          # get the pr number by querying the github api
+          PR_URL=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/timeline | jq '.[] | .source.issue.pull_request.url | select(. != null)')
+          PR_NUMBER=$(echo $PR_URL | cut -d'/' -f8)
+          echo "PR: $PR_NUMBER"
+
