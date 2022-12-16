@@ -83,4 +83,30 @@ jobs:
         body: |
           :rocket: Application has been deployed to ${{ steps.get_url.outputs.CLOUDRUN_URL }}.
 
+    - name: Find Comment
+      uses: peter-evans/find-comment@v2
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Software Factory Build Output
+
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v2
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          ### :factory: Software Factory Build Output ###
+          ---
+          I'll update this comment to show the progress of your deployment (using beautiful GitHub **Markdown** :sparkles: )
+
+          | Status | Task |
+          | --- | --- |
+          | ![](https://img.shields.io/badge/Complete-brightgreen?style=plastic) |  Deploy Google Cloud Run using Terraform |
+          | ![](https://img.shields.io/badge/Complete-brightgreen?style=plastic) | Build Docker image and deploy to Cloud Run instance |
+
+          Application URL: **${{ steps.get_url.outputs.CLOUDRUN_URL }}**
+        reactions: 'rocket'
+        edit-mode: replace
 

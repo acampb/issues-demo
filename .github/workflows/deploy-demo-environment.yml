@@ -10,17 +10,24 @@ on:
 jobs:
   post_comment:
     runs-on: ubuntu-latest
-    name: Getting started comment
+    name: Build Output
     steps:
       - name: Create comment
-        uses: actions-cool/issues-helper@v2
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            To initiate the environment deployment add the Label **deploy environment** to this Pull Request using the sidebar on the right. :point_right:
-          #contents: 'heart'
+            ### :factory: Software Factory Build Output ###
+            ---
+            I'll update this comment to show the progress of your deployment (using beautiful GitHub **Markdown** :sparkles: )
+
+            | Status | Task |
+            | --- | --- |
+            | ![](https://img.shields.io/badge/InProgress-blue?style=plastic) |  Deploy Google Cloud Run using Terraform |
+            | ![](https://img.shields.io/badge/Waiting-lightgrey?style=plastic) | Build Docker image and deploy to Cloud Run instance |
+
+            Application URL: *not yet ready*
+          reactions: 'rocket'
 
   deploy-infrastructure:
     uses: ./.github/workflows/template-terraform-deploy.yml
@@ -31,17 +38,17 @@ jobs:
     secrets: inherit
     needs: deploy-infrastructure
 
-  # placeholder-comment:
-  #   runs-on: ubuntu-latest
-  #   name: Added Comment
-  #   if: contains( github.event.pull_request.labels.*.name, 'deploy environment')
-  #   steps:
-  #     - name: Create comment
-  #       uses: actions-cool/issues-helper@v2
-  #       with:
-  #         actions: 'create-comment'
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         issue-number: ${{ github.event.pull_request.number }}
-  #         body: |
-  #           You successfully labeled the PR! :tada:
-  #         contents: 'heart'
+# ### Software Factory Build Output ###
+# ---
+# I'll update this comment to show the progress of your deployment (using beautiful GitHub **Markdown** ✨ )
+
+# | Status | Task |
+# | --- | --- |
+# | ![](https://img.shields.io/badge/InProgress-blue?style=plastic) |  Deploy Google Cloud Run using Terraform |
+# | ![](https://img.shields.io/badge/Waiting-lightgrey?style=plastic) | Build Docker image and deploy to Cloud Run instance |
+
+# Application URL: *not yet ready*
+
+# ![](https://img.shields.io/badge/InProgress-blue?style=plastic)
+# ![](https://img.shields.io/badge/Waiting-lightgrey?style=plastic)
+# ![](https://img.shields.io/badge/Finished-brightgreen?style=plastic)

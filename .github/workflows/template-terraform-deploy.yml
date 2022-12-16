@@ -75,21 +75,29 @@ jobs:
         run: terraform apply -auto-approve -no-color
         continue-on-error: false
 
-      # - name: Terraform Output
-      #   id: output
-      #   run: |
-      #     CLOUDRUN_URL=$(terraform output cloudrun_url | tr -d '"' | tr -d '\n')
-      #     echo "CLOUDRUN_URL=$CLOUDRUN_URL" >> $GITHUB_OUTPUT
-
-      - name: Post comment to PR
-        if: github.event_name == 'pull_request'
-        uses: actions-cool/issues-helper@v2
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
         with:
-          actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Software Factory Build Output
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Infrastructure has been deployed :muscle:
+            ### :factory: Software Factory Build Output ###
+            ---
+            I'll update this comment to show the progress of your deployment (using beautiful GitHub **Markdown** :sparkles: )
 
-            ...now let's get the app deployed!
+            | Status | Task |
+            | --- | --- |
+            | ![](https://img.shields.io/badge/Complete-brightgreen?style=plastic) |  Deploy Google Cloud Run using Terraform |
+            | ![](https://img.shields.io/badge/InProgress-blue?style=plastic) | Build Docker image and deploy to Cloud Run instance |
 
+            Application URL: *not yet ready*
+          reactions: 'rocket'
+          edit-mode: replace
