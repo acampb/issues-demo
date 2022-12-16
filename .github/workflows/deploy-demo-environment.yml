@@ -2,17 +2,31 @@ name: Software Factory
 
 on:
   pull_request:
-    types: [ opened, edited, labeled ]
+    types: [ opened, labeled ]
   push:
     branches-ignore:
     - 'main'
 
 jobs:
+  post_comment:
+    runs-on: ubuntu-latest
+    name: Getting started comment
+    steps:
+      - name: Create comment
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            To initiate the environment deployment add the Label **deploy environment** to this Pull Request using the sidebar on the right. :point_right:
+          #contents: 'heart'
+
   deploy-infrastructure:
     uses: ./.github/workflows/template-terraform-deploy.yml
     secrets: inherit
 
-  deploy-docker:
+  deploy-app:
     uses: ./.github/workflows/template-docker-deploy.yml
     secrets: inherit
     needs: deploy-infrastructure
