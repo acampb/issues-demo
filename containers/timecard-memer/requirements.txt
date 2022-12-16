@@ -1,3 +1,0 @@
-# python required packages
-Django
-requests

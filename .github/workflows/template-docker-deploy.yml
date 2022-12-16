@@ -49,18 +49,18 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/timecard-memer:${{ github.sha }}
-      working-directory: containers/timecard-memer
+        docker build . --file Dockerfile --tag us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/app:${{ github.sha }}
+      working-directory: containers/app
 
     - name: Push the Docker image
       run: |
-        docker push us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/timecard-memer:${{ github.sha }}
-      working-directory: containers/timecard-memer
+        docker push us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/app:${{ github.sha }}
+      working-directory: containers/app
 
     - name: Deploy Docker image to Cloud Run
       run: |
-        gcloud run deploy cloudrun-${{ steps.get_branch_name.outputs.BRANCH }} --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/timecard-memer:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 8000
-      working-directory: containers/timecard-memer
+        gcloud run deploy cloudrun-${{ steps.get_branch_name.outputs.BRANCH }} --image us-east1-docker.pkg.dev/acampbell-sc-lab/artifacts-${{ steps.get_branch_name.outputs.BRANCH }}/app:${{ github.sha }} --platform managed --region us-east1 --allow-unauthenticated --port 8000
+      working-directory: containers/app
 
     - name: Get the Cloud Run URL
       id: get_url
