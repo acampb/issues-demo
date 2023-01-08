@@ -14,6 +14,3 @@ DISABLE_LINTERS:
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (devcontainer.json)
 
 PARALLEL: true
-
-GITHUB_STATUS_REPORTER: true # Enable GitHub Status Reporter
-MULTI_STATUS: true # Enable Multi Status
