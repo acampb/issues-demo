@@ -1,0 +1,16 @@
+# Configuration file for MegaLinter
+# https://megalinter.io/latest/configuration/
+
+DISABLE_LINTERS:
+  # cspell was flagging numerous non-dictionary words
+  - SPELL_CSPELL
+  # kics was taking 9 minutes to run
+  - TERRAFORM_KICS
+  # link check not able to validate links to private repos
+  - MARKDOWN_MARKDOWN_LINK_CHECK
+  # redundant with checkov
+  - TERRAFORM_TERRASCAN
+
+JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (devcontainer.json)
+
+PARALLEL: true
