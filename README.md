@@ -1,2 +1,2 @@
 # issues-demo
-testing signing 2
+testing debug
