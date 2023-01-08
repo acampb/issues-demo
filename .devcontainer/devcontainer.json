@@ -9,7 +9,7 @@
 		"ghcr.io/devcontainers/features/terraform:1": {},
 		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
 		"ghcr.io/devcontainers/features/node:1": {}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -25,4 +25,8 @@
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+
+	// Uncomment to run commands after the container is started
+	// adds safe directory as container runs as vscode user not root
+	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
