@@ -33,7 +33,8 @@ jobs:
 
       - name: echo sha
         run: |
-          echo "sha: ${{ GITHUB_SHA }}"
+          echo "sha: $GITHUB_SHA"
+          echo "token: $GITHUB_TOKEN"
 
       # MegaLinter
       - name: MegaLinter
